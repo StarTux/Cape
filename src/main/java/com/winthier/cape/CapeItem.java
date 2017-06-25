@@ -11,6 +11,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.entity.EntityToggleGlideEvent;
 import org.bukkit.event.inventory.PrepareAnvilEvent;
+import org.bukkit.event.player.PlayerItemDamageEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -63,12 +64,18 @@ public final class CapeItem implements CustomItem, TickableItem {
         event.setItemName(itemDescription.getDisplayName());
     }
 
+    @EventHandler
+    public void onPlayerItemDamage(PlayerItemDamageEvent event, ItemContext context) {
+        event.setCancelled(true);
+    }
+
     @Override
     public void onTick(ItemContext context, int ticks) {
         if (ticks % 5 != 0) return;
         if (context.getPosition() == ItemContext.Position.CHESTPLATE && plugin.isFlying(context.getPlayer())) return;
         ItemStack item = context.getItemStack();
         if (item.getDurability() <= 0) return;
+        if (!context.getPlayer().isOnGround()) return;
         item.setDurability((short)(item.getDurability() - 1));
     }
 }
