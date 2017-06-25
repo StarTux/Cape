@@ -41,6 +41,7 @@ public final class CapeItem implements CustomItem, TickableItem {
 
     @EventHandler(ignoreCancelled = true)
     public void onEntityToggleGlide(EntityToggleGlideEvent event, ItemContext context) {
+        if (!event.isGliding()) return;
         event.setCancelled(true);
         if (context.getItemStack().getDurability() >= Material.ELYTRA.getMaxDurability()) return;
         Player player = context.getPlayer();
@@ -67,6 +68,9 @@ public final class CapeItem implements CustomItem, TickableItem {
     @EventHandler
     public void onPlayerItemDamage(PlayerItemDamageEvent event, ItemContext context) {
         event.setCancelled(true);
+        if (context.getPlayer().isGliding()) {
+            context.getPlayer().setGliding(false);
+        }
     }
 
     @Override
