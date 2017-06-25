@@ -1,0 +1,8 @@
+name: Cape
+description: Magic cape that enables flight
+author: StarTux
+version: 0.1
+main: com.winthier.cape.CapePlugin
+depend: [ Custom ]
+commands: {}
+permissions: {}
