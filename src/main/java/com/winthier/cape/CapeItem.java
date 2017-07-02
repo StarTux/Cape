@@ -9,6 +9,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityToggleGlideEvent;
 import org.bukkit.event.inventory.PrepareAnvilEvent;
 import org.bukkit.event.player.PlayerItemDamageEvent;
@@ -73,10 +74,20 @@ public final class CapeItem implements CustomItem, TickableItem {
         }
     }
 
+    @EventHandler
+    public void onEntityDamage(EntityDamageEvent event, ItemContext context) {
+        if (context.getPosition() != ItemContext.Position.CHESTPLATE) return;
+        if (context.getPlayer() == null) return;
+        if (!plugin.isFlying(context.getPlayer())) return;
+        plugin.setFlying(context.getPlayer(), false);
+        context.getItemStack().setDurability(Material.ELYTRA.getMaxDurability());
+    }
+
     @Override
     public void onTick(ItemContext context, int ticks) {
+        if (context.getPosition() != ItemContext.Position.CHESTPLATE) return;
         if (ticks % 5 != 0) return;
-        if (context.getPosition() == ItemContext.Position.CHESTPLATE && plugin.isFlying(context.getPlayer())) return;
+        if (plugin.isFlying(context.getPlayer())) return;
         ItemStack item = context.getItemStack();
         if (item.getDurability() <= 0) return;
         if (!context.getPlayer().isOnGround()) return;
