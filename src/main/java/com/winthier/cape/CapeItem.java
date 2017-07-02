@@ -87,6 +87,7 @@ public final class CapeItem implements CustomItem, TickableItem {
     public void onTick(ItemContext context, int ticks) {
         if (context.getPosition() != ItemContext.Position.CHESTPLATE) return;
         if (ticks % 5 != 0) return;
+        if (context.getPlayer().getHealth() < 19.5) return;
         if (plugin.isFlying(context.getPlayer())) return;
         ItemStack item = context.getItemStack();
         if (item.getDurability() <= 0) return;

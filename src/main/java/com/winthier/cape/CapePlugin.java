@@ -69,7 +69,7 @@ public final class CapePlugin extends JavaPlugin implements Listener {
             if (!gameModes.contains(player.getGameMode())) return;
             player.setAllowFlight(true);
             player.setFlying(true);
-            player.setFlySpeed(0.05f);
+            player.setFlySpeed(0.025f);
             Location loc = player.getEyeLocation();
             loc.getWorld().playSound(loc, Sound.BLOCK_END_PORTAL_FRAME_FILL, SoundCategory.PLAYERS, 0.3f, 0.75f);
             // loc.getWorld().playSound(loc, Sound.BLOCK_ENCHANTMENT_TABLE_USE, SoundCategory.PLAYERS, 0.5f, 2.0f);
