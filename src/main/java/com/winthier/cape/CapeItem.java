@@ -9,6 +9,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityToggleGlideEvent;
 import org.bukkit.event.inventory.PrepareAnvilEvent;
@@ -74,7 +75,7 @@ public final class CapeItem implements CustomItem, TickableItem {
         }
     }
 
-    @EventHandler
+    @EventHandler(ignoreCancelled = true, priority = EventPriority.MONITOR)
     public void onEntityDamage(EntityDamageEvent event, ItemContext context) {
         if (context.getPosition() != ItemContext.Position.CHESTPLATE) return;
         if (context.getPlayer() == null) return;
